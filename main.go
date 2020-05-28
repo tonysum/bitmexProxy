@@ -37,29 +37,16 @@ func reader(conn *websocket.Conn)  {
 		}
 	}
 }
-/*
-func writer(conn *websocket.Conn)  {
-	var str []byte
-	str =[]byte("Welcome my VIP!")
-	err := conn.WriteMessage(1,str)
-	if err != nil{
-		log.Fatal("Write Message Error: ", err)
-	}
-}
-*/
+
 
 func wsEndpoint(w http.ResponseWriter, r *http.Request) {
 	upGrade.CheckOrigin = func(r *http.Request) bool {return true}
 	ws, err := upGrade.Upgrade(w,r,nil)
 	if err != nil {
 		fmt.Println(err)
-	
 	}
 	fmt.Println("Clinet Successfully connected ...")
 	reader(ws)
-	//writer(ws)
-
-
 }
 
 

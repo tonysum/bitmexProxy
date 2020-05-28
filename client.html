@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Go WebSocket Test</title>
+</head>
+<body>
+<h1>Connect to Go Websocket Server Test</h1>
+<button onclick="connect()">connect</button>
+<div><h2>
+    Infomation:
+</h2>
+    <div id="info">
+
+    </div>
+</div>
+<div>
+    <input type="text">
+    <button onclick="send()">send</button>
+</div>
+
+
+<script type="text/javascript">
+    let ws;
+    let info = document.getElementById("info");
+    function send() {
+        ws.send("Message from client！");
+    }
+    //function connect() {
+        //console.log("Attempting  WebSocket connection ...");
+        ws = new WebSocket("ws://localhost/ws");
+
+    //}
+
+
+
+    //if (ws) {
+
+        ws.onopen = () => {
+            let p = document.createElement('p');
+            p.innerText = "Successfully connected!";
+            info.appendChild(p);
+        };
+
+        ws.onclose = (event) => {
+            console.log("connect close",event);
+
+        };
+
+        ws.onmessage = (msg) => {
+            if(msg['data']) console.log("Socket message:",msg['data']);
+        };
+        ws.onerror = (error) => {
+            console.log("Socket Error:",error);
+        };
+    //}
+</script>
+</body>
+</html>
